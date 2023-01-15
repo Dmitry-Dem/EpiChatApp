@@ -1,20 +1,30 @@
 ﻿using EpiChatApp.Models;
+using EpiChatApp.Data;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using EpiChatApp.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EpiChatApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+		private readonly ApplicationDbContext _context;
+
+		private readonly ILogger<HomeController> _logger;
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger)
         {
             _logger = logger;
+            _context = context;
         }
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(TestDB._users);
+            var userList = await _context.Users.ToListAsync();
+
+			return View(userList);
         }
 
         public IActionResult Privacy()

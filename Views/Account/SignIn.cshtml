@@ -1,0 +1,48 @@
+﻿@model EpiChatApp.ViewModels.SignInViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="wrapper">
+	<div class="wrapper-container">
+		<div class="d-flex justify-content-center flex-column">
+			<h1 class="m-auto">Sign in</h1>
+
+			<div class="row mt-3">
+				<div class="col-6 flex-fill">
+					<div class="p-5">
+						<form asp-action="SignIn">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+							<div class="email-form mb-3">
+								<label class="form-label">Email</label>
+								<input class="input-email" asp-for="Email" type="text" placeholder="Email@gmail.com" />
+								<span asp-validation-for="Email" class="text-danger"></span>
+							</div>
+
+							<div class="password-form mb-3">
+								<label class="form-label">Password</label>
+								<input class="input-password" asp-for="Password" type="password" placeholder="Password"/>
+								<span asp-validation-for="Password" class="text-danger"></span>
+							</div>
+
+							<div class="mt-lg-4">
+								<button type="submit" class="w-100 button-sign-in">Sign In</button>
+							</div>
+
+							<hr />
+
+							<div class="mt-lg-4">
+								<button class="w-100 button-sign-up green-hover" asp-action="SignUp" formmethod="get">Create an account</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+
+

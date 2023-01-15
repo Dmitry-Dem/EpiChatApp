@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using EpiChatApp.Models;
 using EpiChatApp.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace EpiChatApp.Controllers
 {
@@ -17,29 +19,30 @@ namespace EpiChatApp.Controllers
             _signInManager= signInManager;
             _userManager = userManager;
         }
+
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult SignIn()
         {
-            var responce = new LoginViewModel();
+            var responce = new SignInViewModel();
             return View(responce);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginWiewModel)
+        public async Task<IActionResult> SignIn(SignInViewModel signInViewModel)
         {
-            if (!ModelState.IsValid) return View(loginWiewModel);
+            if (!ModelState.IsValid) return View(signInViewModel);
 
-            var user = await _userManager.FindByEmailAsync(loginWiewModel.Email);
+            var user = await _userManager.FindByEmailAsync(signInViewModel.Email);
 
             if (user != null) 
             {
                 //User is found, check password
-                var passwordCheck = await _userManager.CheckPasswordAsync(user, loginWiewModel.Password);
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, signInViewModel.Password);
                 
                 if (passwordCheck)
                 {
                     //Password is correct, sign in
-                    var result = await _signInManager.PasswordSignInAsync(user, loginWiewModel.Password, false, false);
+                    var result = await _signInManager.PasswordSignInAsync(user, signInViewModel.Password, false, false);
 
                     if (result.Succeeded)
                     {
@@ -49,26 +52,46 @@ namespace EpiChatApp.Controllers
 
                 //Password is incorrect, return view
                 TempData["Error"] = "Wrong credentails. Please try again";
-                return View(loginWiewModel);
+                return View(signInViewModel);
             }
 
             //User not found
             TempData["Error"] = "Wrong credentails. Please try again";
-            return View(loginWiewModel);
+            return View(signInViewModel);
         }
+
+		[HttpGet]
+		public IActionResult SignUp()
+        {
+			var responce = new SignUpViewModel();
+			return View(responce);
+		}
+
+        [HttpPost]
+		public async Task<IActionResult> SignUp(SignUpViewModel signUpViewModel)
+        {
+            if (!ModelState.IsValid) return View(signUpViewModel);
+
+            var user = await _userManager.FindByEmailAsync(signUpViewModel.Email);
+
+            if (user != null)
+            {
+                TempData["Error"] = "This email addres is already in use";
+                return View(signUpViewModel);
+            }
+
+            var newUser = new AppUser()
+            {
+                UserName = signUpViewModel.Name,
+                Email = signUpViewModel.Email
+            };
+
+            var newUserResponse = await _userManager.CreateAsync(newUser, signUpViewModel.Password);
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
 
-/*
-         public RedirectResult LoginUser(LoginWiewModel loginWiewModel)
-        {
-            //if (TestDB._users.Exists(person => person.Login == user.Login && person.Password == user.Password))
-            //{
-            //    return new RedirectResult("/Home/Index", true);
-            //}
-
-            //var str = (_users.Exists(person => person.Login == user.Login && person.Password == user.Password ) ? $"{_users.Find(person => person.Login == user.Login && person.Password == user.Password)}\n user is found!" : "user not found!");
-            return new RedirectResult("/Home/Index", true);
-        }
-         */
 

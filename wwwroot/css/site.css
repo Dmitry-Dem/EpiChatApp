@@ -14,13 +14,121 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-div.login-page {
-    display: flex;
-    justify-content: center;  
+* {
+    color: white;
+}
+
+body {
+    background-color: #232228ff; /*black #201f24ff, red #F51D46ff, black-- #232228ff  , open white #A0A2AFff  , #BEBDCFff  , #FDFDFDff  */
+}
+
+nav.navbar {
+    background-color: #232228ff;
+    border-bottom: 2px solid #F51D46ff;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+}
+
+
+.footer {
+    border-top: 2px solid #F51D46ff;
+}
+
+a{
+    color: white;
 }
 
 div.wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+    margin: auto;
+    min-width: 300px;
+    max-width: 1100px;
+    padding: 0px;
+    margin-bottom: 0px;
 }
+
+div.wrapper-container {
+    margin: auto;
+    min-width: 300px;
+    max-width: 450px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 0.495rem 1.5rem;
+    background-color: #201f24ff;
+    border: none;
+    border-radius: 1rem;
+}
+
+button {
+    color: #fff;
+    background-color: #F51D46ff;
+    border-color: #0d6efd;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 1rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+button:hover {
+    color: #fff;
+    background-color: #ab0725;
+    border-color: #ab0725;
+}
+
+.green-hover:hover {
+    color: #fff;
+    background-color: #3ccb00;
+    border-color: #3ccb00;
+}
+
+/* chat /home/index */
+.menu {
+    background-color: #232228ff;
+    padding: 30px;
+    width: 30%;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 40px;
+}
+
+.rooms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+
+}
+
+wrapper-chat {
+    /*display: flex;
+    flex-direction: row;
+    align-items: stretch;*/
+    width: 100%;
+    height: 100vh;
+}
+
+div.content {
+    background-color: #201f24ff;
+    height: 100vh;
+}
+
+.footer-chat {
+    border-top: 3px solid #F51D46ff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+

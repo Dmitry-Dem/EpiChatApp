@@ -2,14 +2,15 @@
 
 namespace EpiChatApp.ViewModels
 {
-    public class LoginViewModel
+    public class SignInViewModel
     {
-        [Display(Name = "Email Addres")]
+		[Display(Name = "Email Addres")]
         [Required(ErrorMessage = "Email address is required")]
         public string Email { get; set; }
-        [Required]
+
+		[Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-    }
+	}
 }

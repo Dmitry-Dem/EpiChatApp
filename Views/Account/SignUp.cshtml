@@ -1,0 +1,58 @@
+﻿@model EpiChatApp.ViewModels.SignUpViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="wrapper">
+	<div class="wrapper-container">
+		<div class="d-flex justify-content-center flex-column">
+			<h1 class="m-auto">Sign up</h1>
+
+			<div class="row mt-3">
+				<div class="col-6 flex-fill">
+					<div class="p-5">
+						<form asp-action="SignUp" asp-controller="Account">
+							<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+							<div class="mb-3">
+								<label class="form-label">Name<strong style="color: red">*</strong></label>
+								<input class="input-name" asp-for="Name" type="text" placeholder="Name"/>
+								<span asp-validation-for="Name" class="text-danger"></span>
+							</div>
+
+							<div class="mb-3">
+								<label class="form-label">Email<strong style="color: red">*</strong> </label>
+								<input class="input-email" asp-for="Email" type="text" placeholder="Email@mail.com"/>
+								<span asp-validation-for="Email" class="text-danger"></span>
+							</div>
+
+							<div class="password mb-3">
+								<label class="form-label">Password<strong style="color: red">*</strong></label>
+								<input class="input-password" asp-for="Password" type="password" placeholder="Password"/>
+								<span asp-validation-for="Password" class="text-danger"></span>
+							</div>
+
+							<div class="password mb-3">
+								<label class="form-label">Confirm Password<strong style="color: red">*</strong></label>
+								<input class="input-password" asp-for="ConfirmPassword" type="password" placeholder ="Confirm Password"/>
+								<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+							</div>
+
+							<div class="mt-lg-4">
+								<button class="w-100 sign-up" type="submit">Sign Un</button>
+							</div>
+
+							<hr />
+
+							<div class="mt-lg-4">
+								<button class="w-100 sign-up green-hover" asp-controller="Account" asp-action="SignIn" formmethod="get">Back to Sign in</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>    

@@ -1,15 +1,30 @@
-﻿@model List<User>
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
+    var str = ViewData.Eval("Path");
 }
 
-@foreach (var user in Model)
-{
-    <div class="text-center flex-column mb-5">
-        <h3 class="display-4">@user.Name</h3>
-        <p>@user.Login</p>
-        <p>@user.Password</p>
+<div class="wrapper-chat">
+
+    <div class="menu">
+        <h3 class="mb-4">Rooms</h3>
+        <input class="mb-4" placeholder="Search" />
+
+        <a href="#" class="menu-btn"></a>
+        <div class="rooms">
+            @for(int i = 1; i < 10; i++)
+            {
+                <div class="room">
+                    <h5>Name @i</h5>
+                    <p >You: text</p>
+                </div>
+            }
+         </div>
     </div>
-}
+
+    <div class="content">
+        <h1>Some text lorjhvjhvjhvjhvjhv hgvj</h1>
+    </div>
+
+    <footer class="footer-chat"></footer>
+</div>
 

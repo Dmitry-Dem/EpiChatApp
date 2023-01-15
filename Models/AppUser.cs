@@ -1,9 +1,10 @@
-﻿namespace EpiChatApp.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
+namespace EpiChatApp.Models
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-		public string UserName { get; set; }
-		public string Email { get; set; }
-		public string Password { get; set; }
-	}
+
+    }
 }
