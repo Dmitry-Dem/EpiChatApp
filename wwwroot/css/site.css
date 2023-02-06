@@ -105,6 +105,7 @@ main {
     background-color: var(--color-green-hover);
     border-color: var(--color-green-hover);
 }
+
 /*-------------*/
 
 /* Sign In     */
@@ -116,4 +117,5 @@ main {
 .wrapper-content form > * {
     margin-bottom: 15px;
 }
+
 /*-------------*/

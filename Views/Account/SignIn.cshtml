@@ -7,12 +7,12 @@
 		</div>
 		 
 		<form asp-controller="Account" asp-action="SignIn" method="post">
-			<div class="Username-block">
-				<input class="input" type="text" placeholder="Name" />
+			<div class="Email-block">
+				<input class="input" type="email" placeholder="Email@gmail.com" asp-for="Email"/>
 			</div>
 			
 			<div class="password-block">
-				<input class="input" type="password" placeholder="Password" />
+				<input class="input" type="password" placeholder="Password" asp-for="Password" />
 			</div>
 
 			<div class="submite-block">

@@ -1,1 +1,35 @@
-﻿<h1>Sign up Razor Page!</h1>
+﻿@model EpiChatApp.ViewModels.SignUpViewModel
+
+<div class="wrapper">
+	<div class="wrapper-content">
+		<div class="title">
+			<h1>Sign Up</h1>
+		</div>
+
+		<form asp-controller="Account" asp-action="SignIn" method="get">
+			<div class="Username-block">
+				<input class="input" type="text" placeholder="Name" asp-for="Name" />
+			</div>
+
+			<div class="Email-block">
+				<input class="input" type="email" placeholder="Email@gmail.com" asp-for="Email" />
+			</div>
+
+			<div class="password-block">
+				<input class="input" type="password" placeholder="Password" asp-for="Password" />
+			</div>
+
+			<div class="password-confirm-block">
+				<input class="input" type="password" placeholder="Confirm Password" asp-for="PasswordConfirm" />
+			</div>
+
+			<div class="submite-block">
+				<button class="button" type="submit">Sign In</button>
+			</div>
+
+			<div class="back-button-block">
+				<button class="button green-hover" asp-controller="Account" asp-action="SignIn" formmethod="get">Back to Sign In</button>
+			</div>
+		</form>
+	</div>
+</div>
