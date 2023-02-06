@@ -14,7 +14,7 @@ namespace EpiChatApp.Controllers
 
         public IActionResult Index()
         {
-            return View(TestDB._users);
+            return View();
         }
 
         public IActionResult Privacy()

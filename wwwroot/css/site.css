@@ -1,7 +1,26 @@
+:root {
+    --color-green-hover: #00cc1b;
+    --color-red: #F51D46ff;
+    --color-red-hover: #c4082b;
+    --color-dark-1: #201f25ff;
+    --color-dark-2: #232228ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
 html {
     font-size: 14px;
     position: relative;
     min-height: 100%;
+}
+
+body {
+    background-color: var(--color-dark-2);
+    overflow: hidden;
 }
 
 @media (min-width: 768px) {
@@ -14,13 +33,87 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-div.login-page {
-    display: flex;
-    justify-content: center;  
+/* _Layout     */
+
+.main-content {
+    width: 100vw;
+    height: 100vh;
 }
 
-div.wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+main {
+    width: 100%;
+    height: 100%;
 }
+
+.main-footer-hr {
+    position: fixed;
+    border: 3px solid var(--color-red);
+    width: 100%;
+    bottom: 0;
+    margin: 0;
+    opacity: 1;
+}
+
+/*-------------*/
+
+/* main styles */
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrapper-content {
+    width: 300px;
+    padding: 10px; 
+    position: relative;
+    top: 20%;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 100%;
+    border-radius: 50px;
+    border: none;
+    height: 30px;
+    background-color: var(--color-dark-1);
+    padding: 20px;
+}
+
+.button {
+    width: 100%;
+    border-radius: 50px;
+    height: 40px;
+    border: none;
+    background-color: var(--color-red);
+}
+
+.button:hover {
+    background-color: var(--color-red-hover);
+    border-color: var(--color-red-hover);
+}
+
+.green-hover:hover {
+    background-color: var(--color-green-hover);
+    border-color: var(--color-green-hover);
+}
+/*-------------*/
+
+/* Sign In     */
+
+.wrapper-content .title {
+    margin-bottom: 50px;
+}
+
+.wrapper-content form > * {
+    margin-bottom: 15px;
+}
+/*-------------*/

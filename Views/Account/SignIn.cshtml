@@ -1,0 +1,27 @@
+﻿@model EpiChatApp.ViewModels.SignInViewModel
+
+<div class="wrapper">
+	<div class="wrapper-content">
+		<div class="title">
+			<h1>Sign In</h1>
+		</div>
+		 
+		<form asp-controller="Account" asp-action="SignIn" method="post">
+			<div class="Username-block">
+				<input class="input" type="text" placeholder="Name" />
+			</div>
+			
+			<div class="password-block">
+				<input class="input" type="password" placeholder="Password" />
+			</div>
+
+			<div class="submite-block">
+				<button class="button" type="submit">Sign In</button>
+			</div>
+
+			<div class="sidn-up-button-block">
+				<button class="button green-hover" asp-controller="Account" asp-action="SignUp" formmethod="get">Sign Up</button>
+			</div>
+		</form>
+	</div>
+</div>
