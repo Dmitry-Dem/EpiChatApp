@@ -1,8 +1,9 @@
-﻿namespace EpiChatApp.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace EpiChatApp.Models
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-		public string Email { get; set; }
-		public string Password { get; set; }
+
 	}
 }
