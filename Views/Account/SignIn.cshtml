@@ -5,12 +5,13 @@
 }
 
 <div class="wrapper">
-	<div class="wrapper-content">
-		<div class="title">
+	<div class="wrapper-items">
+		<div class="content">
+			<div class="title">
 			<h1>Sign In</h1>
 		</div>
 
-		<form asp-controller="Account" asp-action="SignIn" method="post">
+			<form asp-controller="Account" asp-action="SignIn" method="post">
 			<div class="Email-block">
 				<span asp-validation-for="Email" class="text-danger"></span>
 				<input class="input" type="email" placeholder="Email@gmail.com" asp-for="Email"/>
@@ -29,5 +30,6 @@
 				<button class="button green-hover" asp-controller="Account" asp-action="SignUp" formmethod="get">Sign Up</button>
 			</div>
 		</form>
+		</div>
 	</div>
 </div>
