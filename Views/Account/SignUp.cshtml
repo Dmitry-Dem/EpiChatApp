@@ -5,39 +5,41 @@
 }
 
 <div class="wrapper">
-	<div class="wrapper-content">
-		<div class="title">
-			<h1>Sign Up</h1>
+	<div class="wrapper-items">
+		<div class="content">
+			<div class="title">
+				<h1>Sign Up</h1>
+			</div>
+
+			<form asp-controller="Account" asp-action="SignUp" method="post">
+				<div class="Username-block">
+					<span asp-validation-for="Name" class="text-danger"></span>
+					<input class="input" type="text" placeholder="Name" asp-for="Name" />
+				</div>
+
+				<div class="Email-block">
+					<span asp-validation-for="Email" class="text-danger"></span>
+					<input class="input" type="email" placeholder="Email@gmail.com" asp-for="Email" />
+				</div>
+
+				<div class="password-block">
+					<span asp-validation-for="Password" class="text-danger"></span>
+					<input class="input" type="password" placeholder="Password" asp-for="Password" />
+				</div>
+
+				<div class="password-confirm-block">
+					<span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+					<input class="input" type="password" placeholder="Confirm Password" asp-for="PasswordConfirm" />
+				</div>
+
+				<div class="submite-block">
+					<button class="button" type="submit">Sign In</button>
+				</div>
+
+				<div class="back-button-block">
+					<button class="button green-hover" asp-controller="Account" asp-action="SignIn" formmethod="get">Back to Sign In</button>
+				</div>
+			</form>
 		</div>
-
-		<form asp-controller="Account" asp-action="SignUp" method="post">
-			<div class="Username-block">
-				<span asp-validation-for="Name" class="text-danger"></span>
-				<input class="input" type="text" placeholder="Name" asp-for="Name" />
-			</div>
-
-			<div class="Email-block">
-				<span asp-validation-for="Email" class="text-danger"></span>
-				<input class="input" type="email" placeholder="Email@gmail.com" asp-for="Email" />
-			</div>
-
-			<div class="password-block">
-				<span asp-validation-for="Password" class="text-danger"></span>
-				<input class="input" type="password" placeholder="Password" asp-for="Password" />
-			</div>
-
-			<div class="password-confirm-block">
-				<span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-				<input class="input" type="password" placeholder="Confirm Password" asp-for="PasswordConfirm" />
-			</div>
-
-			<div class="submite-block">
-				<button class="button" type="submit">Sign In</button>
-			</div>
-
-			<div class="back-button-block">
-				<button class="button green-hover" asp-controller="Account" asp-action="SignIn" formmethod="get">Back to Sign In</button>
-			</div>
-		</form>
 	</div>
 </div>
