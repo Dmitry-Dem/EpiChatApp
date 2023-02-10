@@ -2,6 +2,7 @@
     --color-green-hover: #00cc1b;
     --color-red: #F51D46ff;
     --color-red-hover: #c4082b;
+    --color-dark-0: #1a191f;
     --color-dark-1: #201f25ff;
     --color-dark-2: #232228ff;
     --color-menu-bg: #2a282fff;
@@ -10,7 +11,8 @@
     --chat-menu-width: 250px;
     --chat-opn-menu-block-width: 25px;
     --close-menu: -1;
-    --main-body-width: calc(100% - var(--chat-menu-width)); --new-main-body-width: 100%;
+    --main-body-width: calc(100% - var(--chat-menu-width));
+    --new-main-body-width: 100%;
     --new-main-body-left-position: 0;
 }
 
@@ -132,6 +134,10 @@ body {
     background-color: var(--color-red);
 }
 
+input[type="file"] {
+    display: none;
+}
+
 .button:hover {
     background-color: var(--color-red-hover);
     border-color: var(--color-red-hover);
@@ -227,7 +233,7 @@ a:hover {
 .menu-close {
     left: calc(var(--chat-menu-width) * var(--close-menu));
     transition: 0.5s;
-}
+} 
 
 .main-body {
     position: absolute;
@@ -235,6 +241,7 @@ a:hover {
     top: var(--home-header-height);
     width: var(--main-body-width);
     transition: 0.5s;
+    padding: 20px 20px 20px calc(20px + var(--chat-opn-menu-block-width));
 }
 
 .menu-content {
@@ -249,10 +256,6 @@ a:hover {
 }
 
 /*-Home-Index--*/
-
-.chat-body {
-    padding: 20px 20px 20px calc(20px + var(--chat-opn-menu-block-width));
-}
 
 .chat {
     display: flex;
@@ -279,7 +282,7 @@ a:hover {
     margin-top: 10px;
     width: 100%;
     height: max-content;
-    background-color: #1a191f;
+    background-color: var(--color-dark-0);
     border: none;
     padding: 15px;
     resize: none;
@@ -310,4 +313,56 @@ a:hover {
     background: #2a2a32;
 }
 
+/*--Create-Chat*/
+
+.create-chat-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-chat-form {
+    width: 250px;
+}
+
+.create-chat-form > div {
+    margin-bottom: 30px;
+}
+
+.selected-chat-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    border: 3px solid var(--color-red);
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.chat-name > input {
+    background-color: var(--color-dark-0);
+}
+
+.image-uploader {
+    background-color: var(--color-dark-0);
+    padding: 10px;
+    border-radius: 100px;
+    width: max-content;
+    display: block;
+    margin: auto;
+}
+
+.chat-type-section {
+    background-color: var(--color-dark-0);
+    border: none;
+    color: white;
+    border-radius: 100px;
+    padding: 10px;
+    padding-left: 20px;
+}
+
 /*-------------*/
+/*-------------*/
+
+
+

@@ -1,0 +1,41 @@
+﻿@model EpiChatApp.ViewModels.ChatViewModel
+
+@{
+	ViewData["Title"] = "Chat";
+	Layout = "_HomeLayout";
+}
+
+<div class="create-chat-body">
+	<form class="create-chat-form" asp-controller="Home" asp-action="CreateChat" method="post" enctype="multipart/form-data">
+		<div class="select-chat-image">
+			<img class="selected-chat-image" id="img1" src="~/images/chat-images/chat-default-images/gradient-1.jpg" />
+			<label class="image-uploader green-hover">
+				<input type="file" asp-for="ChatImage" id="file1" accept="image/*" />
+				Select image
+			</label>
+		</div>
+
+		<div class="chat-name">
+			<span class="text-danger" asp-validation-for="Name"></span>
+			<input class="input" asp-for="Name" placeholder="Chat Name" />
+		</div>
+
+		<div class="chat-type">
+			<select class="chat-type-section form-select" asp-for="Type">
+				<option value="0">Public</option>
+				<option value="1">Private</option>
+			</select>
+		</div> 
+
+		<button class="button" type="submit">Create Chat</button>
+	</form>
+</div>
+
+<script>
+	let img1 = document.getElementById("img1");
+	let file1 = document.getElementById("file1");
+
+	file1.addEventListener('change', function() {
+		img1.src = URL.createObjectURL(file1.files[0]);
+	});
+</script>

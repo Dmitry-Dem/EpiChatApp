@@ -1,0 +1,28 @@
+﻿@{
+	ViewData["Title"] = "Chat";
+	Layout = "_HomeLayout";
+}
+
+<div class="chat-body">
+	<div class="chat-body-title">
+		<h2 class="mb-4">Chat - 1</h2>
+		<hr class="mb-3" />
+	</div>
+
+	<div class="chat">
+		@for (int i = 0; i < 15; i++)
+		{
+				<div class="chat-message-block">
+					<p class="chat-message">Some text @(i + 1)</p>
+				</div>
+		}
+
+		<div class="chat-message-block">
+			<p class="chat-message">Some text Lorem	kwjdbvkwjbe cjkwbjkebckjwbecjkbwekcbwdhbvjwbvkjbwqkedjbckwjdbecjwebjvbwkbvkwb</p>
+		</div>
+	</div>
+
+	<div class="send-message">
+		<textarea class="input-text-area" placeholder="Text"></textarea>
+	</div>
+</div>
