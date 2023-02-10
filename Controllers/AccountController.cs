@@ -1,6 +1,7 @@
 ﻿using EpiChatApp.Data;
 using EpiChatApp.Models;
 using EpiChatApp.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,12 @@ namespace EpiChatApp.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _webHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
         public IActionResult SignIn()
@@ -76,6 +79,10 @@ namespace EpiChatApp.Controllers
 
             if (newUserResponse.Succeeded)
             {
+                string userDataPath = $"user-data\\user-id-{newUser.Id}\\user-images";
+                string fullUserDataPath = Path.Combine(_webHostEnvironment.WebRootPath, userDataPath);
+				Directory.CreateDirectory(fullUserDataPath);
+
 				return RedirectToAction("SignIn");
 			}
 

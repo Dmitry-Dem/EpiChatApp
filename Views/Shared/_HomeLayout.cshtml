@@ -22,32 +22,8 @@
         </nav>
     </header>
 
-    <div class="chat-menu" id="menu">
-        <div class="opn-menu-block" onclick="openMenu()">
-            <img src="~/images/icons/opn-menu-icon.png" />
-        </div>
+    @await Component.InvokeAsync("Menu")
 
-        <div class="chat-menu-body">
-            <div class="menu-header mb-4">
-                <div class="menu-header-chat-title mb-4">
-                    <h2>Chats</h2>
-                    <a class="add-chat-img" href="#"><img src="~/images/icons/add-chat-icon.png" /></a>
-                </div>
-                <input class="input" placeholder="Search" />
-            </div>
-
-            <div class="menu-content">
-                @for (int i = 0; i < 30; i++)
-                {
-                    <div class="menu-content-chat mb-4">
-                        <h5>Chat - @(i + 1)</h5>
-                        <p>Me: Some Text</p>
-                    </div>
-                }
-            </div>
-        </div>
-	</div>
-    
     <main role="main" class="main">
         <div class="main-body" id="main-body">
             @RenderBody()
