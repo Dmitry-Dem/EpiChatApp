@@ -1,28 +1,45 @@
-﻿@{
+﻿@model Chat
+
+@{
 	ViewData["Title"] = "Chat";
 	Layout = "_HomeLayout";
 }
 
 <div class="chat-body">
 	<div class="chat-body-title">
-		<h2 class="mb-4">Chat - 1</h2>
+		<h2 class="mb-4">@Model.Name</h2>
 		<hr class="mb-3" />
 	</div>
 
-	<div class="chat">
-		@for (int i = 0; i < 15; i++)
+	<div class="chat" id="chatId">
+		@if (Model.Messages.Count() != 0)
 		{
+			@foreach (var message in Model.Messages)
+			{
 				<div class="chat-message-block">
-					<p class="chat-message">Some text @(i + 1)</p>
+					<p class="chat-message">@message.Text</p>
 				</div>
+			}
 		}
-
-		<div class="chat-message-block">
-			<p class="chat-message">Some text Lorem	kwjdbvkwjbe cjkwbjkebckjwbecjkbwekcbwdhbvjwbvkjbwqkedjbckwjdbecjwebjvbwkbvkwb</p>
-		</div>
+		else
+		{
+			<p class="chat-message">Add new Messae</p>
+		}
 	</div>
 
-	<div class="send-message">
-		<textarea class="input-text-area" placeholder="Text"></textarea>
+	<div class="send-message-block">
+		<form asp-action="CreateMessage">
+			<label class="d-flex">
+				<textarea class="input-text-area hide-scroll" type="text" id="textarea" name="message" placeholder="Message"></textarea>
+				<input type="hidden" id="chatId" name="chatId" value="@Model.Id"/>
+				<button class="button-send-message green-hover" type="submit">Send</button>
+			</label>
+		</form>
 	</div>
 </div>
+
+<script>
+	var chat = document.getElementById("chatId");
+	chat.scrollTop = chat.scrollHeight;
+</script>
+

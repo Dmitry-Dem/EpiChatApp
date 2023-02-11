@@ -38,7 +38,7 @@ body {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-@media (min-width: 501px) {
+@media (min-width: 551px) {
     :root {
         --chat-opn-menu-block-width: 0px;
         --close-menu: 0; /* If the screen width larger than 501 px, and menu closed, open menu */
@@ -51,7 +51,7 @@ body {
     }
 }
 
-@media (max-width: 501px) { /*smaller than 501px, maybe 480px?*/
+@media (max-width: 551px) { /*smaller than 501px, maybe 480px?*/
     :root {
         --chat-menu-width: 200px;
     }
@@ -259,7 +259,7 @@ a:hover {
 
 .chat {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     height: 55vh;
     padding: 5px;
     overflow-y: auto;
@@ -278,22 +278,37 @@ a:hover {
     margin-top: 5px;
 }
 
-.input-text-area {
+.send-message-block {
     margin-top: 10px;
-    width: 100%;
-    height: max-content;
+}
+
+.input-text-area {
+    width: 70%;
+    height: 50px;
     background-color: var(--color-dark-0);
     border: none;
     padding: 15px;
     resize: none;
-    border-radius: 20px;
+    border-radius: 50px 0px 0px 50px;
+    outline: none;
+    overflow-wrap: break-word;
+}
+
+.button-send-message {
+    background-color: var(--color-dark-0);
+    border: none;
+    width: 30%;
+    height: 50px;
+    padding: 15px;
+    padding-left: 5px;
+    border-radius: 0px 50px 50px 0px;
+    border-left: 2px solid var(--color-dark-1)
 }
 
 /*-scrollbar--*/
-
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
@@ -313,8 +328,11 @@ a:hover {
     background: #2a2a32;
 }
 
-/*--Create-Chat*/
+.hide-scroll::-webkit-scrollbar {
+    display: none;
+}
 
+/*--Create-Chat*/
 .create-chat-body {
     display: flex;
     flex-direction: column;

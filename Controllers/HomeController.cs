@@ -1,4 +1,5 @@
 ﻿using EpiChatApp.Models;
+using EpiChatApp.Repositories;
 using EpiChatApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,10 +9,10 @@ namespace EpiChatApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public HomeController(IWebHostEnvironment webHostEnvironment)
+        private readonly IChatRepository _chatRepository;
+        public HomeController(IChatRepository chatRepository)
         {
-            _webHostEnvironment = webHostEnvironment;
+            _chatRepository = chatRepository;
         }
         public IActionResult Index()
         {
@@ -26,25 +27,33 @@ namespace EpiChatApp.Controllers
 		{
             if (ModelState.IsValid)
             {
-                if (chatViewModel.ChatImage != null)
-                {
-					string folderPath = $"user-data\\user-id-{GetUserId()}\\user-images\\{Guid.NewGuid().ToString()}_{chatViewModel.ChatImage.FileName}";
-                    string fullFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+                var chatId = await _chatRepository.CreateChat(chatViewModel, GetUserId());
 
-                    await chatViewModel.ChatImage.CopyToAsync(new FileStream(fullFolderPath, FileMode.Create));
-                }
-
-                //Create and save new chat to DB
-
-                return RedirectToAction("Chat");
+                return RedirectToAction("Chat", new { id = chatId });
             }
 
 			return View();
 		}
-		public IActionResult Chat()
+        [HttpGet("id")]
+        public IActionResult Chat(int id)
 		{
-			return View();
+			return View(_chatRepository.GetChat(id));
 		}
+        [HttpPost]
+		public async Task<IActionResult> CreateMessage(int chatId, string message)
+        {
+            var newMessage = new Message
+            {
+                ChatId = chatId,
+                Text = message,
+                Name = User.Identity.Name,
+                Timestamp = DateTime.Now
+            };
+
+            await _chatRepository.CreateMessage(newMessage);
+
+            return RedirectToAction("Chat", new { id = chatId });
+        }
 		public IActionResult Privacy()
         {
             return View();
@@ -55,7 +64,6 @@ namespace EpiChatApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
         private string GetUserId()
         {
             return User.FindFirst(ClaimTypes.NameIdentifier).Value;

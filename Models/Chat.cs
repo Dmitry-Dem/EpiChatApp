@@ -6,11 +6,11 @@
 		public string Name { get; set; } = null!;
 		public string ImagePath { get; set; } = null!;
 		public ChatType Type { get; set; }
-		public ICollection<Messege> Messeges { get; set; }
+		public ICollection<Message> Messages { get; set; }
 		public ICollection<ChatUser> ChatUsers { get; set; }
 		public Chat()
 		{
-			Messeges = new List<Messege>();
+			Messages = new List<Message>();
 			ChatUsers = new List<ChatUser>();
 		}
 	}
