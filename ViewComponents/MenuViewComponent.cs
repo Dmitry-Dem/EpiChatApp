@@ -16,9 +16,10 @@ namespace EpiChatApp.ViewComponents
 		{
 			var chats = _dbContext.ChatUsers
 				.Include(x => x.Chat)
+				.Include(x => x.Chat.Messages)
 				.Where(x => x.AppUserId == GetUserId())
 				.Select(x => x.Chat)
-				.ToList();
+			.ToList();
 
 			return View(chats);
 		}

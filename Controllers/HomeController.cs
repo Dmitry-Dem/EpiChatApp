@@ -1,12 +1,15 @@
 ﻿using EpiChatApp.Models;
 using EpiChatApp.Repositories;
 using EpiChatApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Security.Claims;
 
 namespace EpiChatApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IChatRepository _chatRepository;
@@ -34,7 +37,7 @@ namespace EpiChatApp.Controllers
 
 			return View();
 		}
-        [HttpGet("id")]
+        [Route("Home/Chat/{id}")]
         public IActionResult Chat(int id)
 		{
 			return View(_chatRepository.GetChat(id));
@@ -42,15 +45,18 @@ namespace EpiChatApp.Controllers
         [HttpPost]
 		public async Task<IActionResult> CreateMessage(int chatId, string message)
         {
-            var newMessage = new Message
+            if (message.IsNullOrEmpty() != true)
             {
-                ChatId = chatId,
-                Text = message,
-                Name = User.Identity.Name,
-                Timestamp = DateTime.Now
-            };
+                var newMessage = new Message
+                {
+                    ChatId = chatId,
+                    Text = message,
+                    Name = User.Identity.Name,
+                    Timestamp = DateTime.Now
+                };
 
-            await _chatRepository.CreateMessage(newMessage);
+                await _chatRepository.CreateMessage(newMessage);
+            }
 
             return RedirectToAction("Chat", new { id = chatId });
         }
