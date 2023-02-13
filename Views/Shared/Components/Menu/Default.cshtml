@@ -15,18 +15,26 @@
         </div>
 
         <div class="menu-content">
-            @if (Model.Count() != 0)
+            @if (Model != null)
             {
                 @foreach (var chat in Model)
                 {
-                    <div class="menu-content-chat mb-4">
+                    <div class="menu-content-chat green-hover">
+                        <img src="@chat.ImagePath">
                         <a asp-controller="Home" asp-action="Chat" asp-route-id="@chat.Id"><h5>@chat.Name</h5></a>
-                        @*<p>Me: Some Text</p>*@
+                        @if (chat.Messages.Count() != 0)
+                        {
+                            <p class="color-text-1">@(chat.Messages.Last().Name): @(chat.Messages.Last().Text)</p>
+                        }
+                        else
+                        {
+                            <p class="color-text-1">no messages</p>
+                        }
                     </div>
                 }
             }
             else {
-                <div class="menu-content-chat mb-4">
+                <div class="menu-content-chat">
                     <h5>Add new Chat!</h5>
                 </div>
             }

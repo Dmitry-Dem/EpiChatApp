@@ -26,6 +26,7 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\user-data\" />
+    <Folder Include="wwwroot\user-data\user-id-605fdfce-4eb5-4b8c-b693-7c2145e4c462\user-images\" />
   </ItemGroup>
 
 </Project>

@@ -2,6 +2,7 @@
 using EpiChatApp.Models;
 using EpiChatApp.ViewModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace EpiChatApp.Repositories
@@ -17,27 +18,25 @@ namespace EpiChatApp.Repositories
         }
         public async Task<int> CreateChat(ChatViewModel chatViewModel, string userId)
         {
-            string chatImagePath = "";
+            UserImage userImage = new UserImage(
+                userId: userId,
+                isNullImage: chatViewModel.ChatImage == null,
+                imageName: chatViewModel.ChatImage?.FileName 
+                );
 
-            if (chatViewModel.ChatImage == null)
+            string chatImagePath = getChatImagePath(userImage);
+
+            if (chatViewModel.ChatImage != null)
             {
-                chatImagePath = "images\\chat-images\\chat-default-images\\1.jpg";
+                string userDataFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, chatImagePath);
+                await chatViewModel.ChatImage.CopyToAsync(new FileStream(userDataFolderPath, FileMode.Create));
             }
-            else
-            {
-                string folderPath = $"user-data\\user-id-{userId}\\user-images\\" +
-                    $"{Guid.NewGuid().ToString()}_{chatViewModel.ChatImage.FileName}";
 
-                chatImagePath = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
-
-                await chatViewModel.ChatImage.CopyToAsync(new FileStream(chatImagePath, FileMode.Create));
-            }
-            
             var chat = new Chat
             {
                 Name = chatViewModel.Name,
                 Type = chatViewModel.Type,
-                ImagePath = chatImagePath
+                ImagePath = "\\" + chatImagePath
             };
 
             chat.ChatUsers.Add(new ChatUser
@@ -52,17 +51,33 @@ namespace EpiChatApp.Repositories
 
             return chat.Id;
         }
-        public Chat GetChat(int id)
-        {
-            return _applicationDBContext.Chats
-                .Include(x => x.Messages)
-                .FirstOrDefault(c => c.Id == id);
-        }
         public async Task CreateMessage(Message message)
         {
             _applicationDBContext.Messages.Add(message);
 
             await _applicationDBContext.SaveChangesAsync();
+        }
+        public Chat? GetChat(int id)
+        {
+            return _applicationDBContext.Chats
+                .Include(x => x.Messages)
+                .FirstOrDefault(c => c.Id == id);
+        }
+        private string getChatImagePath(UserImage userImage)
+        {
+            string defaultChatImagePath = "images\\chat-images\\chat-default-images\\1.jpg";
+            string chatImagePath;
+
+            if (userImage.isNullImage)
+            {
+                chatImagePath = defaultChatImagePath;
+            }
+            else
+            {
+                chatImagePath = $"user-data\\user-id-{userImage.userId}\\user-images\\{Guid.NewGuid().ToString()}_{userImage.imageName}";
+            }
+
+            return chatImagePath;
         }
     }
 }
