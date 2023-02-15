@@ -294,6 +294,14 @@ a:hover {
     border-radius: 20px;
 }
 
+.chat-message-block {
+    display: flex;
+}
+
+.justify-end {
+    justify-content: end;
+}
+
 .chat-message {
     background-color: #2f2f37;
     width: max-content;
@@ -333,6 +341,7 @@ a:hover {
 }
 
 /*-scrollbar--*/
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
