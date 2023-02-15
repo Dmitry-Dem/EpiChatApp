@@ -56,9 +56,10 @@ namespace EpiChatApp.Controllers
                 };
 
                 await _chatRepository.CreateMessage(newMessage);
-            }
 
-            return RedirectToAction("Chat", new { id = chatId });
+				return Ok();
+			}
+            return StatusCode(400); //bad request
         }
 		public IActionResult Privacy()
         {

@@ -16,7 +16,7 @@
 		{
 			@foreach (var message in Model.Messages)
 			{
-				<div class="chat-message-block">
+				<div class="chat-message-block @(message.Name == User.Identity.Name ? "justify-end" : "")">
 					<p class="chat-message">@message.Text</p>
 				</div>
 			}
@@ -28,18 +28,49 @@
 	</div>
 
 	<div class="send-message-block">
-		<form asp-action="CreateMessage">
-			<label class="d-flex">
-				<textarea class="input-text-area hide-scroll" type="text" id="textarea" name="message" placeholder="Message"></textarea>
-				<input type="hidden" id="chatId" name="chatId" value="@Model.Id"/>
-				<button class="button-send-message green-hover" type="submit">Send</button>
-			</label>
-		</form>
+		<label class="d-flex">
+			<textarea class="input-text-area hide-scroll" type="text" id="textareaId" name="message" placeholder="Message"></textarea>
+			<button class="button-send-message green-hover" onclick="sendMessage()">Send</button>
+		</label>
 	</div>
 </div>
 
 <script>
 	var chat = document.getElementById("chatId");
 	chat.scrollTop = chat.scrollHeight;
+
+	function sendMessage(){
+		var textarea = document.getElementById("textareaId");
+		var newMessage = textarea.value;
+
+		$.ajax({
+			type: 'POST',
+			url: "@Url.Action("CreateMessage")",
+			data: { chatId: @(Model.Id), message: newMessage },
+			success: function (result) {
+				addMessageToChat(newMessage);
+			},
+			error: function () {
+				//alert("bad request");
+			}
+		})
+
+		textarea.value = "";
+	}
+
+	function addMessageToChat(message) {
+
+		var newP = document.createElement('p');
+		newP.className = 'chat-message';
+		newP.textContent = message;
+
+		var newDiv = document.createElement('div');
+		newDiv.className = 'chat-message-block justify-end';
+		newDiv.appendChild(newP);
+		
+		chat.appendChild(newDiv);
+		chat.scrollTop = chat.scrollHeight;
+	}
+
 </script>
 
