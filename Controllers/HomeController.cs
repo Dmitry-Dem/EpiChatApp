@@ -4,6 +4,7 @@ using EpiChatApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -21,10 +22,45 @@ namespace EpiChatApp.Controllers
         {
             return View();
         }
+		public IActionResult GetChatsByName(string chatName)
+		{
+            if (chatName.IsNullOrEmpty() != true)
+            {
+                List<Chat> chats = _chatRepository.GetChatsByName(chatName).ToList();
+
+				var json = JsonConvert.SerializeObject(chats);
+
+				return Json(json);
+			}
+            else
+            {
+                return StatusCode(400);
+            }
+		}
+
+		[Route("Home/Chat/{id}")]
+		public IActionResult Chat(int id)
+		{
+			return View(_chatRepository.GetChat(id));
+		}
 		public IActionResult CreateChat()
 		{
 			return View();
 		}
+		[Route("Home/JoinChat/{chatId}")]
+		public async Task<IActionResult> JoinChat(int chatId)
+        {
+            var chat = _chatRepository.GetChat(chatId);
+
+            bool isUserSuccessfullyJoined = await _chatRepository.IsUserSuccessfullyJoined(chat, GetUserId());
+
+			if (isUserSuccessfullyJoined)
+            {
+				return RedirectToAction("Chat", new { id = chatId });
+			}
+
+            return RedirectToAction("Index");
+        }
 		[HttpPost]
 		public async Task<IActionResult> CreateChat(ChatViewModel chatViewModel)
 		{
@@ -36,11 +72,6 @@ namespace EpiChatApp.Controllers
             }
 
 			return View();
-		}
-        [Route("Home/Chat/{id}")]
-        public IActionResult Chat(int id)
-		{
-			return View(_chatRepository.GetChat(id));
 		}
         [HttpPost]
 		public async Task<IActionResult> CreateMessage(int chatId, string message)
@@ -61,6 +92,7 @@ namespace EpiChatApp.Controllers
 			}
             return StatusCode(400); //bad request
         }
+
 		public IActionResult Privacy()
         {
             return View();

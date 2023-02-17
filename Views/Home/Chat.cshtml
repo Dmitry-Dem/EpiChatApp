@@ -23,14 +23,14 @@
 		}
 		else
 		{
-			<p class="chat-message">Add new Messae</p>
+			<p class="chat-message">Add new Message</p>
 		}
 	</div>
 
 	<div class="send-message-block">
 		<label class="d-flex">
-			<textarea class="input-text-area hide-scroll" type="text" id="textareaId" name="message" placeholder="Message"></textarea>
-			<button class="button-send-message green-hover" onclick="sendMessage()">Send</button>
+			<textarea class="input input-with-button text-area hide-scroll color-dack-0" type="text" id="textareaId" name="message" placeholder="Message"></textarea>
+			<button class="button-with-input button-send-message green-hover color-dack-0" onclick="sendMessage()">Send</button>
 		</label>
 	</div>
 </div>
@@ -47,11 +47,11 @@
 			type: 'POST',
 			url: "@Url.Action("CreateMessage")",
 			data: { chatId: @(Model.Id), message: newMessage },
-			success: function (result) {
+			success: function (data) {
 				addMessageToChat(newMessage);
 			},
-			error: function () {
-				//alert("bad request");
+			error: function (err) {
+				console.log(err);
 			}
 		})
 

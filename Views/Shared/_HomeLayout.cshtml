@@ -12,10 +12,13 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="SignIn">EpiChatApp</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">EpiChatApp</a>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">                     
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item me-4">
+                            <a asp-controller="Account" asp-action="SignIn">Sign In</a>
+                        </li>
                     </ul>
                 </div>
             </div>

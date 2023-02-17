@@ -1,6 +1,53 @@
 ﻿@{
-	ViewData["Title"] = "Chat";
 	Layout = "_HomeLayout";
 }
 
-<h1>Select chat!</h1>
+<div class="wrapper">
+	<div class="input-chat-block">
+		<input class="input input-with-button color-dack-0" id="chatNameId" placeholder="Search by chat name" />
+		<button class="button-with-input green-hover color-dack-0" onclick="getChatListByName()">Search</button>
+	</div>
+
+	<hr />
+
+	<div class="chat-list-block">
+		<ul class="chat-list" id="ulLiChatsId">
+			<li>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<script>
+	function getChatListByName() {
+		var chatName = document.getElementById("chatNameId").value;
+
+		$.ajax({
+			url: "/Home/GetChatsByName",
+			method: 'GET',
+			data: { chatName: chatName },
+			success: function (data) {
+				var chatList = JSON.parse(data);
+				showChatList(chatList);
+			},
+			error: function (err) {
+				console.error(err);
+			}
+		});
+	}
+
+	var ulLiChats = document.getElementById("ulLiChatsId");
+
+	function showChatList(chats) {
+		ulLiChats.innerHTML = "";
+
+		for(let i = 0; i < chats.length; i++) {
+			addLiItem(chats[i].Id, chats[i].Name, chats[i].ImagePath, chats[i].Type);
+		}
+	}
+
+	function addLiItem(id, name, imagePath, type) {
+		ulLiChats.innerHTML += '<li><a href="/Home/JoinChat/' + id + '"><div class="menu-content-chat green-hover"><img src="' + imagePath + '"><h5>' + name + '</h5><p class="color-text-1">' + (type == 0 ? 'Public' : 'Private') +'</p></div></a></li>';
+	}
+
+</script>
