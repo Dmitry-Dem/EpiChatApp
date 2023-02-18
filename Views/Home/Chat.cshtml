@@ -35,9 +35,39 @@
 	</div>
 </div>
 
+<input hidden="hidden" id="userName" value="@(User.Identity.Name)" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+
 <script>
 	var chat = document.getElementById("chatId");
 	chat.scrollTop = chat.scrollHeight;
+
+	var connection = new signalR.HubConnectionBuilder()
+		.withUrl("/chat")
+		.build();
+
+	var userName = document.getElementById("userName").value;
+
+	connection.on("RecieveMessage", function (data) {
+		var isCurrentUserMessage = (data.name == userName);
+
+		addMessageToChat(data.text, isCurrentUserMessage);
+	})
+	
+	connection.start()
+		.then(function () {
+			connection.invoke('joinChat', '@Model.Id');
+			console.log("joined!");
+		})
+		.catch(function (err) {
+			console.log(err)
+		})
+
+	window.addEventListener('onunload', function () {
+		connection.invoke('leaveChat', '@Model.Id');
+		console.log("leaved!");
+	});
 
 	function sendMessage(){
 		var textarea = document.getElementById("textareaId");
@@ -48,7 +78,6 @@
 			url: "@Url.Action("CreateMessage")",
 			data: { chatId: @(Model.Id), message: newMessage },
 			success: function (data) {
-				addMessageToChat(newMessage);
 			},
 			error: function (err) {
 				console.log(err);
@@ -58,19 +87,25 @@
 		textarea.value = "";
 	}
 
-	function addMessageToChat(message) {
+	function addMessageToChat(message, isCurrentUserMessage) {
 
 		var newP = document.createElement('p');
 		newP.className = 'chat-message';
 		newP.textContent = message;
 
 		var newDiv = document.createElement('div');
-		newDiv.className = 'chat-message-block justify-end';
+		if (isCurrentUserMessage)
+		{
+			newDiv.className = 'chat-message-block justify-end';
+		}
+		else {
+			newDiv.className = 'chat-message-block';
+		}
+
 		newDiv.appendChild(newP);
 		
 		chat.appendChild(newDiv);
 		chat.scrollTop = chat.scrollHeight;
 	}
-
 </script>
 
