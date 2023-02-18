@@ -1,8 +1,10 @@
-﻿using EpiChatApp.Models;
+﻿using EpiChatApp.Hubs;
+using EpiChatApp.Models;
 using EpiChatApp.Repositories;
 using EpiChatApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -74,7 +76,7 @@ namespace EpiChatApp.Controllers
 			return View();
 		}
         [HttpPost]
-		public async Task<IActionResult> CreateMessage(int chatId, string message)
+		public async Task<IActionResult> CreateMessage(int chatId, string message, [FromServices] IHubContext<ChatHub> chat)
         {
             if (message.IsNullOrEmpty() != true)
             {
@@ -87,6 +89,14 @@ namespace EpiChatApp.Controllers
                 };
 
                 await _chatRepository.CreateMessage(newMessage);
+
+				await chat.Clients.Group(chatId.ToString())
+				.SendAsync("RecieveMessage", new
+				{
+					Text = newMessage.Text,
+					Name = newMessage.Name,
+					Timestamp = newMessage.Timestamp.ToString("dd/MM/yyyy hh:mm:ss")
+				});
 
 				return Ok();
 			}
