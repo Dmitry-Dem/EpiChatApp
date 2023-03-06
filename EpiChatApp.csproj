@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d4143c25-d45a-429f-8f3a-09b3b6ca7586</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\user-data\" />
-    <Folder Include="wwwroot\user-data\user-id-605fdfce-4eb5-4b8c-b693-7c2145e4c462\user-images\" />
   </ItemGroup>
 
 </Project>

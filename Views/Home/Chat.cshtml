@@ -7,9 +7,11 @@
 
 <div class="chat-body">
 	<div class="chat-body-title">
-		<h2 class="mb-4">@Model.Name</h2>
-		<hr class="mb-3" />
+		<img class="chat-image me-3" src="@Model.ImagePath"/>
+		<h2 class="mb-5">@Model.Name</h2>
 	</div>
+
+	<hr class="mb-3" />
 
 	<div class="chat" id="chatId">
 		@if (Model.Messages.Count() != 0)
@@ -17,6 +19,7 @@
 			@foreach (var message in Model.Messages)
 			{
 				<div class="chat-message-block @(message.Name == User.Identity.Name ? "justify-end" : "")">
+					<p class="mt-auto mb-auto color-text-1 me-2">@message.Name:</p>	
 					<p class="chat-message">@message.Text</p>
 				</div>
 			}
@@ -44,7 +47,7 @@
 	chat.scrollTop = chat.scrollHeight;
 
 	var connection = new signalR.HubConnectionBuilder()
-		.withUrl("/chat")
+		.withUrl("/chatHub")
 		.build();
 
 	var userName = document.getElementById("userName").value;

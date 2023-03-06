@@ -1,0 +1,39 @@
+﻿@model EpiChatApp.ViewModels.UserProfileViewModel
+
+@{
+    Layout = "_HomeLayout";
+}
+
+<div class="wrapper">
+	<div class="wrapper-items">
+		<div class="content top-0">
+			<div class="title">
+				<h1>Update User</h1>
+				@if (TempData["Error"] != null)
+				{
+					<p class="text-danger">
+						@TempData["Error"]
+					</p>
+				}
+			</div>
+
+			<form asp-controller="Home" asp-action="UpdateUser" method="post">
+				<div class="Username-block">
+					<span asp-validation-for="Name" class="text-danger"></span>
+					<input class="input" type="text" placeholder="Name" asp-for="Name" value="@Model.Name"/>
+				</div>
+
+				<div class="Email-block">
+					<span asp-validation-for="Email" class="text-danger"></span>
+					<input class="input" type="email" placeholder="Email@gmail.com" asp-for="Email" value="@Model.Email" />
+				</div>
+
+				<div class="submite-block">
+					<button class="button" type="submit">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+

@@ -13,11 +13,12 @@
     --chat-opn-menu-block-width: 25px;
     --close-menu: -1;
     --main-body-width: calc(100% - var(--chat-menu-width));
+    --main-body-left-position: var(--chat-menu-width);
     --new-main-body-width: 100%;
     --new-main-body-left-position: 0;
 }
 
-*, a {
+*, a, p {
     margin: 0;
     padding: 0;
     color: white;
@@ -56,7 +57,7 @@ ul > li {
     }
 }
 
-@media (max-width: 551px) { /*smaller than 501px, maybe 480px?*/
+@media (max-width: 551px) { /*smaller than 551px*/
     :root {
         --chat-menu-width: 200px;
     }
@@ -73,6 +74,13 @@ ul > li {
     }
 }
 
+@media (min-width: 1000px) {
+    :root {
+        --main-body-width: 700px;
+        --new-main-body-width: 700px;
+        --main-body-left-position: calc(50% - var(--chat-menu-width));
+    }
+}
 /*--_Layout----*/
 
 .main {
@@ -266,7 +274,7 @@ a:hover {
 
 .main-body {
     position: absolute;
-    left: var(--chat-menu-width);
+    left: var(--main-body-left-position);
     top: var(--home-header-height);
     width: var(--main-body-width);
     height: calc(100% - var(--home-header-height));
@@ -289,6 +297,11 @@ a:hover {
 .menu-content-chat > img {
     height: 40px;
     width: 40px;
+}
+
+.chat-image {
+    height: 60px;
+    width: 60px;
     float: left;
     margin: 8px 5px 0px 5px;
     border-radius: 40px;

@@ -3,11 +3,13 @@ using EpiChatApp.Models;
 using EpiChatApp.Repositories;
 using EpiChatApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Runtime.Intrinsics.X86;
 using System.Security.Claims;
 
 namespace EpiChatApp.Controllers
@@ -16,9 +18,11 @@ namespace EpiChatApp.Controllers
     public class HomeController : Controller
     {
         private readonly IChatRepository _chatRepository;
-        public HomeController(IChatRepository chatRepository)
+        private readonly IUserRepository _userRepository;
+        public HomeController(IChatRepository chatRepository, IUserRepository userRepository)
         {
             _chatRepository = chatRepository;
+            _userRepository = userRepository;
         }
         public IActionResult Index()
         {
@@ -39,7 +43,6 @@ namespace EpiChatApp.Controllers
                 return StatusCode(400);
             }
 		}
-
 		[Route("Home/Chat/{id}")]
 		public IActionResult Chat(int id)
 		{
@@ -101,6 +104,58 @@ namespace EpiChatApp.Controllers
 				return Ok();
 			}
             return StatusCode(400); //bad request
+        }
+        public IActionResult Profile()
+        {
+            var user = _userRepository.GetUser(GetUserId());
+
+            if (user != null)
+            {
+				var upDateUser = new UserProfileViewModel()
+				{
+                    Email = user.Email,
+                    Name = user.UserName
+				};
+
+                View(upDateUser);
+			}
+
+			return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateUser(UserProfileViewModel upDateUser)
+        {
+			if (ModelState.IsValid)
+            {
+                var user = _userRepository.GetUser(GetUserId());
+
+                user.UserName = (upDateUser.Name != "" ? upDateUser.Name : user.UserName);
+
+                if (user.Email != upDateUser.Email)
+                {
+					//check if email is already in use
+					var isAddresAlreadyInUse = await _userRepository.FindUserByEmailAsync(upDateUser.Email) != null;
+
+					if (isAddresAlreadyInUse)
+					{
+						TempData["Error"] = "Addres is already in use!";
+						return RedirectToAction("Profile");
+					}
+
+					user.Email = upDateUser.Email;
+				}
+
+                var result = await _userRepository.UpdateUserAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                TempData["Error"] = "User can't be updated";
+            }
+
+            return RedirectToAction("Profile");
         }
 
 		public IActionResult Privacy()

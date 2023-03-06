@@ -14,8 +14,12 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">EpiChatApp</a>
 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item me-4">
+                            <a asp-controller="Home" asp-action="Profile">Profile</a>
+                        </li>
+
                         <li class="nav-item me-4">
                             <a asp-controller="Account" asp-action="SignIn">Sign In</a>
                         </li>

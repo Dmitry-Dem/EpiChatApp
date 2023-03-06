@@ -1,22 +1,17 @@
-﻿using EpiChatApp.Data;
-using EpiChatApp.Models;
+﻿using EpiChatApp.Models;
+using EpiChatApp.Repositories;
 using EpiChatApp.ViewModels;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EpiChatApp.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IUserRepository _userRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public AccountController(IUserRepository userRepository, IWebHostEnvironment webHostEnvironment)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
+            _userRepository = userRepository;
             _webHostEnvironment = webHostEnvironment;
         }
         [HttpGet]
@@ -36,15 +31,15 @@ namespace EpiChatApp.Controllers
 		{
             if (!ModelState.IsValid) return View();
 
-            var user = await _userManager.FindByEmailAsync(signInViewModel.Email);
+            var user = await _userRepository.FindUserByEmailAsync(signInViewModel.Email);
 
-            if (user != null) 
+            if (user != null)
             {
-                var checkPassword = await _userManager.CheckPasswordAsync(user, signInViewModel.Password);
+                var checkPassword = await _userRepository.CheckPasswordAsync(user, signInViewModel.Password);
 
                 if (checkPassword)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(user, signInViewModel.Password, false, false);
+                    var result = await _userRepository.PasswordSignInAsync(user, signInViewModel.Password, false, false);
                     if (result.Succeeded) 
                     {
 						return RedirectToAction("Index", "Home");
@@ -61,7 +56,7 @@ namespace EpiChatApp.Controllers
 		{
 			if (!ModelState.IsValid) return View(signUpViewModel);
 
-            var user = await _userManager.FindByEmailAsync(signUpViewModel.Email);
+            var user = await _userRepository.FindUserByEmailAsync(signUpViewModel.Email);
 
             if (user != null)
             {
@@ -75,7 +70,7 @@ namespace EpiChatApp.Controllers
                 Email = signUpViewModel.Email
             };
 
-            var newUserResponse = await _userManager.CreateAsync(newUser, signUpViewModel.Password);
+            var newUserResponse = await _userRepository.CreateUserAsync(newUser, signUpViewModel.Password);
 
             if (newUserResponse.Succeeded)
             {

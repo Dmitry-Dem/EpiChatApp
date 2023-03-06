@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EpiChatApp.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230211175948_InitialCreate")]
+    [Migration("20230222112546_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

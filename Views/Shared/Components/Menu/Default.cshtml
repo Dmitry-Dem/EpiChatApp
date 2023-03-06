@@ -7,11 +7,10 @@
 
     <div class="chat-menu-body">
         <div class="menu-header mb-4">
-            <div class="menu-header-chat-title mb-4">
+            <div class="menu-header-chat-title mb-5">
                 <h2>Chats</h2>
                 <a class="add-chat-img" asp-controller="Home" asp-action="CreateChat"><img src="~/images/icons/add-chat-icon.png" /></a>
             </div>
-            <input class="input" placeholder="Search" />
         </div>
 
         <div class="menu-content">
@@ -21,7 +20,7 @@
                 {
                     <a asp-controller="Home" asp-action="Chat" asp-route-id="@chat.Id">
                         <div class="menu-content-chat green-hover">
-                            <img src="@chat.ImagePath">
+                            <img class="chat-image" src="@chat.ImagePath">
                             <h5>@chat.Name</h5>
                             @if (chat.Messages.Count() != 0)
                             {

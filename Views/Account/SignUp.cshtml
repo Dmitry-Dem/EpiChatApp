@@ -9,6 +9,13 @@
 		<div class="content">
 			<div class="title">
 				<h1>Sign Up</h1>
+
+				@if (TempData["Error"] != null)
+				{
+					<p class="text-danger">
+						@TempData["Error"]
+					</p>
+				}
 			</div>
 
 			<form asp-controller="Account" asp-action="SignUp" method="post">
